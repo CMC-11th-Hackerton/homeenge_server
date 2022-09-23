@@ -1,0 +1,63 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.umt'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	// Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// Spring data Jpa
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// Spring Web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// H2
+	runtimeOnly 'com.h2database:h2'
+
+	// Lombok
+	annotationProcessor 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok'
+
+	// DozerMapper
+	implementation 'com.github.dozermapper:dozer-core:6.5.2'
+
+	// Swagger
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+	// Spring Validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.2'
+
+	// Spring dev tools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools:2.6.2'
+
+	// MySql
+	implementation 'mysql:mysql-connector-java'
+
+	// AWS
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
