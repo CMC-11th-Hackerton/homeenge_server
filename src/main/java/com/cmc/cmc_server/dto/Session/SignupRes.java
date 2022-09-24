@@ -13,11 +13,13 @@ import lombok.NoArgsConstructor;
 public class SignupRes {
     private String email;
     private String nickname;
+    private String proImg;
 
     public static SignupRes toSignupRes(User user) {
         return SignupRes.builder()
                 .email(user.getEmail())
                 .nickname(user.getNickname())
+                .proImg(user.getImageUrl())
                 .build();
     }
 
