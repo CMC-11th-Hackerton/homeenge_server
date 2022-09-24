@@ -32,5 +32,6 @@ public class Challenge extends BaseTimeEntity{
 
     private String content;
 
+    private Long counts;
 
 }
