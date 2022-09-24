@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,8 +25,9 @@ public class StoryController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(consumes = {"multipart/form-data"})
-    public void createStory(@ModelAttribute createStoryReq createStoryReq) {
+    public ResponseEntity<Void> createStory(@ModelAttribute createStoryReq createStoryReq) {
         storyService.create(createStoryReq);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
