@@ -17,7 +17,6 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 @ApiModel("스토리 정보")
@@ -34,5 +33,9 @@ public class Story extends BaseTimeEntity {
     @ApiModelProperty(value = "스토리 이미지 url", example = "image.com")
     private String imageUrl;
 
-
+    @Builder
+    public Story(Long userId, String imageUrl) {
+        this.userId = userId;
+        this.imageUrl = imageUrl;
+    }
 }
