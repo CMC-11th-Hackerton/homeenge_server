@@ -5,6 +5,7 @@ import com.cmc.cmc_server.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,4 +24,21 @@ public class UserController {
     public User create(@RequestBody User user) {
         return userService.create(user);
     }
+
+    /**
+     * 마이 페이지 API*
+     * @param userId
+     * @return UserInfoRes
+     */
+//    @GetMapping("/{userId}")
+//    @ApiOperation(value = "마이페이지", notes = "사용자의 정보, 챌린지 정보, 데일리 정보를 찾아온다.")
+//    public ResponseEntity<?> getUserInfo(@PathVariable Long userId) {
+//        try{
+//          return ResponseEntity.ok().body(userService.getUserInfo(userId));
+//        } catch (Exception exception) {
+//            exception.printStackTrace();
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
+
 }
