@@ -42,17 +42,18 @@ public class StoryService {
     private List<String> uploadPostImages(ImageReq imageReq) {
         return imageReq.getImageFiles().stream()
                 .map(image -> s3Uploader.upload(image, "post"))
-                .map(url -> createPostImage(url))
+                .map(url -> createStory(url, imageReq.getId()))
                 .map(postImage -> postImage.getImageUrl())
                 .collect(Collectors.toList());
     }
 
     /**
-     * PostImage 생성 메서드
+     * Story 생성 메서드
      */
-    private Story createPostImage(String url) {
+    private Story createStory(String url, long id) {
         System.out.println("url = " + url);
         return storyRepository.save(Story.builder()
+                .userId(id)
                 .imageUrl(url)
                 .build());
     }
