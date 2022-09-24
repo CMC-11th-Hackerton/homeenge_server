@@ -2,16 +2,12 @@ package com.cmc.cmc_server.controllers;
 
 import com.cmc.cmc_server.application.ChallengeService;
 import com.cmc.cmc_server.domain.Challenge;
-import com.cmc.cmc_server.dto.Challenge.ChallengeReq;
-import com.cmc.cmc_server.dto.Session.SignupReq;
-import com.cmc.cmc_server.dto.Session.SignupRes;
+import com.cmc.cmc_server.dto.Challenge.RoomReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = "미션 API")
@@ -26,6 +22,12 @@ public class ChallengeController {
     @GetMapping("/count")
     public List<Challenge> getChallenge(@RequestParam("id") Long id) {
         return challengeService.getCount(id);
+    }
+
+    @ApiOperation(value = "챌린지 방 생성", notes = "주어진 정보를 받아 챌린지 방 생성 API")
+    @PostMapping
+    public Challenge CreateChallenge(@RequestBody RoomReq roomReq) {
+        return challengeService.createRoom(roomReq);
     }
 
 

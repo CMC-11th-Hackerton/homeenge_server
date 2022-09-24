@@ -34,4 +34,7 @@ public class Challenge extends BaseTimeEntity{
 
     private Long counts;
 
+    @Builder.Default
+    private boolean finished = false;
+
 }
