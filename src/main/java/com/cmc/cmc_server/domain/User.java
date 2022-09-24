@@ -37,5 +37,11 @@ public class User extends BaseTimeEntity {
     @ApiModelProperty(value = "사용자 닉네임", example = "케빈케빈")
     private String nickname;
 
+    @ApiModelProperty(value = "사용자 포인트", example = "15")
+    @Builder.Default
+    private Integer points = 0;
+
+    @Builder.Default
+    private boolean isPointed = false;
 
 }

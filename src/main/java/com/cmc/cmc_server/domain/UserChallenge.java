@@ -25,13 +25,16 @@ public class UserChallenge {
     @ApiModelProperty(value = "idx", example = "1")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Challenge challenge;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Story story;
+
+    @Builder.Default
+    private boolean IsSuccess = false;
 
 }
