@@ -21,7 +21,7 @@ public class ChallengeService {
     private final UserRepository userRepository;
 
     public List<Challenge> getCount(Long id) {
-        return challengeRepository.findAllByOwnerIdOrderByCountsDesc(id);
+        return challengeRepository.findTop5ByOwnerIdOrderByCountsDesc(id);
     }
 
     @Transactional
