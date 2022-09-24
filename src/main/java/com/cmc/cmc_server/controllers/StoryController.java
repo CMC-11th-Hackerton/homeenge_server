@@ -1,11 +1,10 @@
 package com.cmc.cmc_server.controllers;
 
-import com.cmc.cmc_server.application.ImageService;
 import com.cmc.cmc_server.application.StoryService;
 import com.cmc.cmc_server.dto.Image.ImageReq;
 import com.cmc.cmc_server.dto.Story.GetStoryReq;
 import com.cmc.cmc_server.dto.Story.ReportStoryReq;
-import com.cmc.cmc_server.dto.Story.createStoryReq;
+import com.cmc.cmc_server.dto.Story.ChallengeDetailRes;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/story")
@@ -58,6 +56,13 @@ public class StoryController {
             exception.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @ApiOperation(value = "스토리 목록", notes = "사용자 스토리 목록을 조회하는 api")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/detail")
+    public ChallengeDetailRes getUserChallengeDetail(@RequestParam("challengeId") Long challengeId) {
+        return storyService.getChallengeDetail(challengeId);
     }
 
 }
