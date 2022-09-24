@@ -28,34 +28,22 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserChallengeRepository userChallengeRepository;
-    private final DailyRepository dailyRepository;
 
     public User create(User user) {
         return userRepository.save(user);
     }
-/*
+
     public UserInfoRes getUserInfo(Long userId) throws Exception {
 
-        // 유저 email, nickname
+        // 유저 email, nickname, points
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
         // 챌린지 방 id, 미션 title
-        // 챌린지 방 id -> userId로 userChallenge에서 받아오기
-        // userChallenge의 challenge의 title 가져오기
         UserChallenge challenge = userChallengeRepository.findByUser_Id(userId);
 
-        // 데일리 리스트 정보 (한 달)
-        List<Daily> dailyList = dailyRepository.findByUser(user);
-
-        List<DailyRes> dailyResList = new ArrayList<>();
-        for (Daily daily : dailyList) {
-            dailyResList.add(new DailyRes(daily.getCreateAt(), daily.isSuccess()));
-        }
-
-        return new UserInfoRes(user.getEmail(), user.getNickname(),
-                challenge.getId(), challenge.getChallenge().getMission().getTitle(),
-                dailyResList);
+        return new UserInfoRes(user.getEmail(), user.getNickname(), user.getPoints(),
+                challenge.getId(), challenge.getChallenge().getMission().getTitle());
     }
-    */
+
 
 }

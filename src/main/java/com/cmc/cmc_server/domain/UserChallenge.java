@@ -37,4 +37,7 @@ public class UserChallenge {
     @Builder.Default
     private boolean IsSuccess = false;
 
+    @Builder.Default
+    private boolean nomination = false;
+
 }

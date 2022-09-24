@@ -30,15 +30,15 @@ public class UserController {
      * @param userId
      * @return UserInfoRes
      */
-//    @GetMapping("/{userId}")
-//    @ApiOperation(value = "마이페이지", notes = "사용자의 정보, 챌린지 정보, 데일리 정보를 찾아온다.")
-//    public ResponseEntity<?> getUserInfo(@PathVariable Long userId) {
-//        try{
-//          return ResponseEntity.ok().body(userService.getUserInfo(userId));
-//        } catch (Exception exception) {
-//            exception.printStackTrace();
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
+    @GetMapping("/{userId}")
+    @ApiOperation(value = "마이페이지", notes = "사용자의 정보, 챌린지 정보, 데일리 정보를 찾아온다.")
+    public ResponseEntity<?> getUserInfo(@PathVariable Long userId) {
+        try{
+          return ResponseEntity.ok().body(userService.getUserInfo(userId));
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
 }

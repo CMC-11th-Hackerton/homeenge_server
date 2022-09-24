@@ -41,7 +41,4 @@ public class User extends BaseTimeEntity {
     @Builder.Default
     private Integer points = 0;
 
-    @Builder.Default
-    private boolean isPointed = false;
-
 }
