@@ -25,7 +25,7 @@ public class Challenge extends BaseTimeEntity{
     @ApiModelProperty(value = "idx", example = "1")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User owner;
 
     private String title;
