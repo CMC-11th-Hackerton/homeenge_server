@@ -28,7 +28,6 @@ public class SessionService
                 .email(signupReq.getEmail())
                 .password(signupReq.getPassword())
                 .nickname(signupReq.getNickname())
-                .imageUrl(signupReq.getImageUrl())
                 .build());
 
         return SignupRes.toSignupRes(user);
