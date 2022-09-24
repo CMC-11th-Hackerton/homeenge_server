@@ -73,6 +73,7 @@ public class ChallengeService {
             challRes.add(ChallRes.builder()
                     .id(challenge.getId())
                     .missionName(challenge.getMission().getTitle())
+                    .challengeName(challenge.getContent())
                     .counts(challenge.getCounts())
                     .currCounts(challenge.getCurrCounts())
                     .endTime(challenge.getFinishTime())
@@ -119,7 +120,7 @@ public class ChallengeService {
         for (Challenge challenge : madeChall) {
             madeChalls.add(MadeChall.builder()
                     .id(challenge.getId())
-                    .imageUrl(challenge.getImageUrl())
+                    .imageUrl(challenge.getMission().getImageUrl())
                     .missionName(challenge.getMission().getTitle())
                     .build());
         }
@@ -127,7 +128,7 @@ public class ChallengeService {
         for (UserChallenge challenge : currChall) {
             currChalls.add(CurrChall.builder()
                     .id(challenge.getId())
-                    .imageUrl(challenge.getChallenge().getImageUrl())
+                    .imageUrl(challenge.getChallenge().getMission().getImageUrl())
                     .missionName(challenge.getChallenge().getMission().getTitle())
                     .build());
         }
@@ -148,7 +149,7 @@ public class ChallengeService {
         for (Challenge challenge : madeChall) {
             madeChalls.add(MadeChall.builder()
                     .id(challenge.getId())
-                    .imageUrl(challenge.getImageUrl())
+                    .imageUrl(challenge.getMission().getImageUrl())
                     .missionName(challenge.getMission().getTitle())
                     .build());
         }
@@ -158,7 +159,7 @@ public class ChallengeService {
             if (challenge.getChallenge().isFinished() == false) {
                 currChalls.add(CurrChall.builder()
                         .id(challenge.getId())
-                        .imageUrl(challenge.getChallenge().getImageUrl())
+                        .imageUrl(challenge.getChallenge().getMission().getImageUrl())
                         .missionName(challenge.getChallenge().getMission().getTitle())
                         .build());
             }
@@ -178,7 +179,7 @@ public class ChallengeService {
         for (Challenge challenge : madeChall) {
             madeChalls.add(MadeChall.builder()
                     .id(challenge.getId())
-                    .imageUrl(challenge.getImageUrl())
+                    .imageUrl(challenge.getMission().getImageUrl())
                     .missionName(challenge.getMission().getTitle())
                     .build());
         }
@@ -188,7 +189,7 @@ public class ChallengeService {
             if (challenge.getChallenge().isFinished() == true) {
                 currChalls.add(CurrChall.builder()
                         .id(challenge.getId())
-                        .imageUrl(challenge.getChallenge().getImageUrl())
+                        .imageUrl(challenge.getChallenge().getMission().getImageUrl())
                         .missionName(challenge.getChallenge().getMission().getTitle())
                         .build());
             }

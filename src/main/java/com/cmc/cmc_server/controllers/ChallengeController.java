@@ -28,7 +28,7 @@ public class ChallengeController {
         return challengeService.getCount(id);
     }
 
-    @ApiOperation(value = "챌린지 방 생성", notes = "주어진 정보를 받아 챌린지 방 생성 API")
+    @ApiOperation(value = "챌린지 글 등록하기", notes = "주어진 정보를 받아 챌린지 글을 등록하는 API")
     @PostMapping
     public ResponseEntity<Void> createChallenge(@RequestBody RoomReq roomReq) {
         challengeService.createRoom(roomReq);
@@ -48,9 +48,9 @@ public class ChallengeController {
         return challengeService.getRoomByStep(step);
     }
 
-    @ApiOperation(value = "특정 챌린지 방 불러오기", notes = "특정 챌린지 방을 불러오는 API")
+    @ApiOperation(value = "챌린지 상세조회", notes = "첼린지 idx를 받아 챌린지 방을 불러오는 API")
     @GetMapping("/room")
-    public RoomRes getRoom(@RequestParam @ApiParam(value = "방 인덱스") Long id) {
+    public RoomRes getRoom(@RequestParam @ApiParam(value = "첼린지 인덱스") Long id) {
         return challengeService.getRoom(id);
     }
 

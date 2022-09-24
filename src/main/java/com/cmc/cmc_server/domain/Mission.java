@@ -24,10 +24,13 @@ public class Mission {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @ApiModelProperty(value = "idx", example = "1")
+    @ApiModelProperty(value = "미션 인덱스", example = "1")
     private Long id;
 
     @ApiModelProperty(value = "미션 이름", example = "양치하기")
     private String title;
+
+    @ApiModelProperty(value = "미션 이미지", example = "image.com")
+    private String imageUrl;
 
 }

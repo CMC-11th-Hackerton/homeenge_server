@@ -18,8 +18,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/session")
 @Api(tags = "세션 API")
-public class SessionController
-{
+public class SessionController {
     private final SessionService sessionService;
 
     @ApiOperation(value = "회원가입", notes = "회원가입 요청 데이터를 받아 회원가입을 합니다.")
@@ -27,6 +26,5 @@ public class SessionController
     public SignupRes signup(@RequestBody @Valid SignupReq signupReq) {
         return sessionService.signup(signupReq);
     }
-
 
 }

@@ -27,7 +27,7 @@ public class RoomReq {
     @ApiModelProperty(value = "인원 수", example = "4")
     private Long counts;
 
-    @ApiModelProperty(value = "방장의 말", example = "4")
+    @ApiModelProperty(value = "방장님의 한 마디", example = "화이팅!")
     private String content;
 
     @ApiModelProperty(value = "모집 마감 시간(시간분초)", example = "180808")

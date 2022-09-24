@@ -14,7 +14,7 @@ public class CurrChall {
     @ApiModelProperty(value = "챌린지 인덱스", example = "1")
     private Long id;
 
-    @ApiModelProperty(value = "첼린지 이미지", example = "image.com")
+    @ApiModelProperty(value = "첼린지(미션) 이미지", example = "image.com")
     private String imageUrl;
 
     @ApiModelProperty(value = "미션 내용", example = "8시에 일어나서 이불개기")
