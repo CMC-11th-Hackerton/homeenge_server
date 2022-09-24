@@ -25,7 +25,9 @@ public enum ErrorCode {
 
     EMAIL_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "이미 존재하는 이메일입니다."),
 
-    PASSWORD_NOT_MATCHED(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+    PASSWORD_NOT_MATCHED(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
+
+    CHALLENGE_NOT_MATCHED(HttpStatus.BAD_REQUEST, "방이 존재하지 않습니다.");
 
     private final HttpStatus Status;
     private final String message;
