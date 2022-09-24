@@ -34,9 +34,11 @@ public class UserChallenge {
     @ManyToOne(fetch = FetchType.EAGER)
     private Story story;
 
+    //성공여부
     @Builder.Default
     private boolean IsSuccess = false;
 
+    //지목여부
     @Builder.Default
     private boolean nomination = false;
 
