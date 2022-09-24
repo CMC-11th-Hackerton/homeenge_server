@@ -79,6 +79,7 @@ public class ChallengeService {
                     .currCounts(challenge.getCurrCounts())
                     .endTime(challenge.getFinishTime())
                     .step(challenge.getStep())
+                    .imageUrl(challenge.getMission().getImageUrl())
                     .build());
         }
         return challRes;

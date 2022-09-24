@@ -38,4 +38,6 @@ public class ChallRes {
     @ApiModelProperty(value = "단계 숫자", example = "1")
     private Integer step;
 
+    private String imageUrl;
+
 }
