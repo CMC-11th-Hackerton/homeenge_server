@@ -38,6 +38,8 @@ public class Challenge extends BaseTimeEntity{
 
     private String content;
 
+    private String imageUrl;
+
     // 총 인원수
     @Builder.Default
     private Long counts = 0L;
