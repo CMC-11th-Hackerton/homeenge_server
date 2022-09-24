@@ -30,12 +30,16 @@ public class Story extends BaseTimeEntity {
     @ApiModelProperty(value = "사용자 id", example = "1")
     private Long userId;
 
+    @OneToOne
+    private Challenge challenge;
+
     @ApiModelProperty(value = "스토리 이미지 url", example = "image.com")
     private String imageUrl;
 
     @Builder
-    public Story(Long userId, String imageUrl) {
+    public Story(Long userId, Challenge challenge, String imageUrl) {
         this.userId = userId;
+        this.challenge = challenge;
         this.imageUrl = imageUrl;
     }
 }
