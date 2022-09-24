@@ -218,5 +218,11 @@ public class ChallengeService {
                 .collect(Collectors.toList());
     }
 
+    // 지목하기
+    public void nominationUser(NominateReq nominateReq) {
+        userChallengeRepository.modifynom(nominateReq.getChallengeId(), nominateReq.getUserId());
+
+    }
+
 
 }

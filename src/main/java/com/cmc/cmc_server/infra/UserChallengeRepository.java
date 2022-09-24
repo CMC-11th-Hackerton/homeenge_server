@@ -4,6 +4,7 @@ import com.cmc.cmc_server.domain.Challenge;
 import com.cmc.cmc_server.domain.User;
 import com.cmc.cmc_server.domain.UserChallenge;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,10 @@ public interface UserChallengeRepository extends JpaRepository<UserChallenge, Lo
 
     @Query("select uc from UserChallenge uc where uc.challenge = :challenge and uc.nomination = false")
     List<UserChallenge> findByChallenge(Challenge challenge);
+
+    @Modifying
+    @Query("UPDATE UserChallenge uc set uc.nomination = True where uc.challenge.id = :challengeId and uc.user.id = :userId")
+    void modifynom(Long challengeId, Long userId);
 
     List<UserChallenge> findAllByChallenge(Challenge challenge);
 

@@ -37,7 +37,7 @@ public class ChallengeController {
 
     @ApiOperation(value = "챌린지 방 신청하기", notes = "챌린지 방에 참여하는 API, response로 200을 반환합니다.")
     @PostMapping("/enter")
-    public ResponseEntity<Void> enterRoom(@RequestBody ChallengeReq challengeReq) {
+    public ResponseEntity<Void> enterToRoom(@RequestBody ChallengeReq challengeReq) {
         challengeService.enterRoom(challengeReq);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -72,6 +72,13 @@ public class ChallengeController {
         return challengeService.getMyEndChallenge(id);
     }
 
+    @ApiOperation(value = "챌린지 방 신청하기", notes = "챌린지 방에 참여하는 API, 정상적으로 참여한 경우 true를 반환합니다.")
+    @PostMapping("/enter")
+    public ResponseEntity<Void> enterRoom(@RequestBody ChallengeReq challengeReq) {
+        challengeService.enterRoom(challengeReq);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     /**
      * 챌린지 지목 리스트 API*
      *
@@ -89,4 +96,11 @@ public class ChallengeController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @ApiOperation(value = "챌린지 지목", notes = "챌린지 지목을 받은 유저의 nomination값을 true로 바꿉니다.")
+    @PostMapping("/nominate")
+    public void nominationUser(@RequestBody NominateReq nominateReq) {
+        challengeService.nominationUser(nominateReq);
+    }
+
 }
