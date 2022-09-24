@@ -29,4 +29,6 @@ public class Daily extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    //파이팅
+
 }
