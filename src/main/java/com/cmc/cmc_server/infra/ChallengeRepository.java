@@ -9,4 +9,6 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
 
     List<Challenge> findAllByOwnerIdOrderByCountsDesc(Long id);
 
+    List<Challenge> findAllById(Long id);
+
 }

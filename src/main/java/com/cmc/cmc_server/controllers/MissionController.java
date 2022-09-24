@@ -12,7 +12,7 @@ import java.util.List;
 @Api(tags = "미션 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/challenge")
+@RequestMapping("/mission")
 public class MissionController {
 
     private final MissionService challengeService;
