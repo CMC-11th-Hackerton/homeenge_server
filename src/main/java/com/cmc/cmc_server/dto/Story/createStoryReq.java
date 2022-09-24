@@ -23,7 +23,7 @@ public class createStoryReq {
     private Long id;
 
     @ApiModelProperty(value = "스토리 이미지 파일", example = "image.com")
-    private List<MultipartFile> imageFiles;
+    private List<MultipartFile> imageFiles = new ArrayList<>();
 }
 
 

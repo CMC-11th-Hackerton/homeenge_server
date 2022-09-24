@@ -2,6 +2,7 @@ package com.cmc.cmc_server.controllers;
 
 import com.cmc.cmc_server.application.ImageService;
 import com.cmc.cmc_server.application.StoryService;
+import com.cmc.cmc_server.dto.Image.ImageReq;
 import com.cmc.cmc_server.dto.Story.createStoryReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,9 +26,9 @@ public class StoryController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<Void> createStory(@ModelAttribute createStoryReq createStoryReq) {
-        storyService.create(createStoryReq);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    public ResponseEntity<Void> createStory(@ModelAttribute ImageReq imageReq) {
+        storyService.createPost(imageReq);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

@@ -29,7 +29,7 @@ public class Story extends BaseTimeEntity {
     private Long storyId;
 
     @ApiModelProperty(value = "사용자 id", example = "1")
-    private Long id;
+    private Long userId;
 
     @ApiModelProperty(value = "스토리 이미지 url", example = "image.com")
     private String imageUrl;

@@ -1,9 +1,11 @@
 package com.cmc.cmc_server.application;
 
 
+import com.cmc.cmc_server.domain.PostImage;
 import com.cmc.cmc_server.domain.Story;
 import com.cmc.cmc_server.domain.User;
 import com.cmc.cmc_server.dto.Image.ImageReq;
+import com.cmc.cmc_server.dto.Image.ImageRes;
 import com.cmc.cmc_server.dto.Story.createStoryReq;
 import com.cmc.cmc_server.infra.StoryRepository;
 import com.cmc.cmc_server.infra.UserRepository;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -24,13 +27,30 @@ public class StoryService {
     private final StoryRepository storyRepository;
     private final S3Uploader s3Uploader;
 
-    public void create(createStoryReq createStoryReq){
-        for(MultipartFile temp : createStoryReq.getImageFiles()){
-            Story story = Story.builder()
-                    .id(createStoryReq.getId())
-                    .imageUrl(s3Uploader.upload(temp, "Story"))
-                    .build();
-            storyRepository.save(story);
-        }
+    public ImageRes createPost(ImageReq imageReq) {
+        List<String> postImages = uploadPostImages(imageReq);
+        return ImageRes.builder().imageUrl(postImages).build();
     }
+
+    /**
+     * 이미지 파일 S3 저장 + PostImage 생성
+     */
+    private List<String> uploadPostImages(ImageReq imageReq) {
+        return imageReq.getImageFiles().stream()
+                .map(image -> s3Uploader.upload(image, "post"))
+                .map(url -> createPostImage(url))
+                .map(postImage -> postImage.getImageUrl())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * PostImage 생성 메서드
+     */
+    private Story createPostImage(String url) {
+        System.out.println("url = " + url);
+        return storyRepository.save(Story.builder()
+                .imageUrl(url)
+                .build());
+    }
+
 }
