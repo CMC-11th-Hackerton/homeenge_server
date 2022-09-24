@@ -130,7 +130,7 @@ public class ChallengeService {
         List<UserChallenge> currChall = userChallengeRepository.findAllByUser(user);
         for (UserChallenge challenge : currChall) {
             currChalls.add(CurrChall.builder()
-                    .id(challenge.getId())
+                    .id(challenge.getChallenge().getId())
                     .imageUrl(challenge.getChallenge().getMission().getImageUrl())
                     .missionName(challenge.getChallenge().getMission().getTitle())
                     .finished(challenge.getChallenge().isFinished())
@@ -163,7 +163,7 @@ public class ChallengeService {
         for (UserChallenge challenge : currChall) {
             if (challenge.getChallenge().isFinished() == false) {
                 currChalls.add(CurrChall.builder()
-                        .id(challenge.getId())
+                        .id(challenge.getChallenge().getId())
                         .imageUrl(challenge.getChallenge().getMission().getImageUrl())
                         .missionName(challenge.getChallenge().getMission().getTitle())
                         .finished(challenge.getChallenge().isFinished())
@@ -195,7 +195,7 @@ public class ChallengeService {
         for (UserChallenge challenge : currChall) {
             if (challenge.getChallenge().isFinished() == true) {
                 currChalls.add(CurrChall.builder()
-                        .id(challenge.getId())
+                        .id(challenge.getChallenge().getId())
                         .imageUrl(challenge.getChallenge().getMission().getImageUrl())
                         .missionName(challenge.getChallenge().getMission().getTitle())
                         .finished(challenge.getChallenge().isFinished())
