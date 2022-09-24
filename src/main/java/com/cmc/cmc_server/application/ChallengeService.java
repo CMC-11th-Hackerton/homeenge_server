@@ -36,7 +36,7 @@ public class ChallengeService {
     private final UserChallengeRepository userChallengeRepository;
 
     public List<Challenge> getCount(Long id) {
-        return challengeRepository.findAllByOwnerIdOrderByCountsDesc(id);
+        return challengeRepository.findTop5ByOwnerIdOrderByCountsDesc(id);
     }
 
     public Challenge createRoom(RoomReq roomReq) {

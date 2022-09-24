@@ -27,4 +27,8 @@ public class SignupReq {
     @NotBlank(message = "닉네임을 입력해주세요.")
     private String nickname;
 
+    @ApiModelProperty(value = "사용자 프로필 사진", example = "img.jpg")
+    @NotBlank(message = "프로필 사진을 입력해주세요.")
+    private String imageUrl;
+
 }
