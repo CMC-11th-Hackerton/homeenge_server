@@ -28,6 +28,9 @@ public class Challenge extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.EAGER)
     private User owner;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    private Mission mission;
+
     private String title;
 
     private String content;
