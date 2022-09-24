@@ -1,23 +1,15 @@
 package com.cmc.cmc_server.application;
 
-import com.cmc.cmc_server.domain.Daily;
 import com.cmc.cmc_server.domain.User;
 import com.cmc.cmc_server.domain.UserChallenge;
-import com.cmc.cmc_server.dto.Daily.DailyRes;
 import com.cmc.cmc_server.dto.User.UserInfoRes;
 import com.cmc.cmc_server.errors.CustomException;
-import com.cmc.cmc_server.errors.ErrorCode;
-import com.cmc.cmc_server.errors.ErrorResponse;
-import com.cmc.cmc_server.infra.DailyRepository;
 import com.cmc.cmc_server.infra.UserChallengeRepository;
 import com.cmc.cmc_server.infra.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import static com.cmc.cmc_server.errors.ErrorCode.USER_NOT_FOUND;
 

@@ -1,13 +1,10 @@
 package com.cmc.cmc_server.dto.User;
 
-import com.cmc.cmc_server.dto.Daily.DailyRes;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.util.List;
 
 @Builder
 @Getter
