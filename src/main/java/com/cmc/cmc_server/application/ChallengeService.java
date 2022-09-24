@@ -4,9 +4,8 @@ import com.cmc.cmc_server.domain.Challenge;
 import com.cmc.cmc_server.domain.Mission;
 import com.cmc.cmc_server.domain.User;
 import com.cmc.cmc_server.domain.UserChallenge;
-import com.cmc.cmc_server.dto.Challenge.ChallengeReq;
-import com.cmc.cmc_server.dto.Challenge.GetNominationRes;
-import com.cmc.cmc_server.dto.Challenge.RoomReq;
+import com.cmc.cmc_server.dto.Challenge.*;
+import com.cmc.cmc_server.dto.User.UserResultData;
 import com.cmc.cmc_server.errors.CustomException;
 import com.cmc.cmc_server.errors.ErrorCode;
 import com.cmc.cmc_server.infra.ChallengeRepository;
@@ -19,11 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.cmc.cmc_server.errors.ErrorCode.CHALLENGE_NOT_FOUND;
-import static com.cmc.cmc_server.errors.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -39,35 +38,163 @@ public class ChallengeService {
         return challengeRepository.findTop5ByOwnerIdOrderByCountsDesc(id);
     }
 
-    public Challenge createRoom(RoomReq roomReq) {
-        User user = userRepository.findById(roomReq.getId())
+    public void createRoom(RoomReq roomReq) {
+        User user = userRepository.findById(roomReq.getLeaderId())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        Mission mission = missionRepository.getById(roomReq.getMissionId());
+        Mission mission = missionRepository.findById(roomReq.getMissionId())
+                .orElseThrow(() -> new CustomException(CHALLENGE_NOT_FOUND));
 
-        String input = "20220925"+roomReq.getEndTime();
+        String input = "20220925" + roomReq.getEndTime();
         DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         LocalDateTime ldt = LocalDateTime.parse(input.substring(0, 14), f);
 
         Challenge challenge = Challenge.builder()
                 .owner(user)
-                .title(roomReq.getContent())
-                .content(roomReq.getContent())
+                .title(roomReq.getTitle())
                 .counts(roomReq.getCounts())
                 .mission(mission)
                 .finishTime(ldt)
+                .content(roomReq.getContent())
                 .build();
 
-        return challengeRepository.save(challenge);
+        userChallengeRepository.save(UserChallenge.builder()
+                .challenge(challenge)
+                .user(user)
+                .build());
+
+        challengeRepository.save(challenge);
     }
 
-    public List<Challenge> getRoom() {
-        return challengeRepository.findAll();
+    public List<ChallRes> getRoomByStep(Integer step) {
+        List<Challenge> allByStep = challengeRepository.findAllByStep(step);
+        List<ChallRes> challRes = new ArrayList<>();
+        for (Challenge challenge : allByStep) {
+            challRes.add(ChallRes.builder()
+                    .id(challenge.getId())
+                    .missionName(challenge.getMission().getTitle())
+                    .counts(challenge.getCounts())
+                    .currCounts(challenge.getCurrCounts())
+                    .endTime(challenge.getFinishTime())
+                    .step(challenge.getStep())
+                    .build());
+        }
+        return challRes;
     }
 
-    public Challenge getRoom(Long id) {
-        return challengeRepository.findById(id)
+    public RoomRes getRoom(Long id) {
+        Challenge challenge = challengeRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.CHALLENGE_NOT_MATCHED));
+        List<UserChallenge> Challenge = userChallengeRepository.findAllByChallenge(challenge);
+        List<UserResultData> userResultData = new ArrayList<>();
+        for (UserChallenge userChallenge : Challenge) {
+            userResultData.add(UserResultData.builder()
+                    .id(userChallenge.getUser().getId())
+                    .nickname(userChallenge.getUser().getNickname())
+                    .imageUrl(userChallenge.getUser().getImageUrl())
+                    .build());
+        }
+
+        return RoomRes.builder()
+                .title(challenge.getTitle())
+                .missionName(challenge.getMission().getTitle())
+                .counts(challenge.getCounts())
+                .currCounts(challenge.getCurrCounts())
+                .userResultData(userResultData)
+                .content(challenge.getContent())
+                .endTime(challenge.getFinishTime())
+                .build();
+
+    }
+
+    public MyChall getMyAllChallenge(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        List<CurrChall> currChalls = new ArrayList<>();
+        List<MadeChall> madeChalls = new ArrayList<>();
+
+        List<Challenge> madeChall = challengeRepository.findAllByOwner(user);
+
+        for (Challenge challenge : madeChall) {
+            madeChalls.add(MadeChall.builder()
+                    .id(challenge.getId())
+                    .imageUrl(challenge.getImageUrl())
+                    .missionName(challenge.getMission().getTitle())
+                    .build());
+        }
+        List<UserChallenge> currChall = userChallengeRepository.findAllByUser(user);
+        for (UserChallenge challenge : currChall) {
+            currChalls.add(CurrChall.builder()
+                    .id(challenge.getId())
+                    .imageUrl(challenge.getChallenge().getImageUrl())
+                    .missionName(challenge.getChallenge().getMission().getTitle())
+                    .build());
+        }
+        return MyChall.builder().madeChalls(madeChalls).currChalls(currChalls).build();
+
+
+    }
+
+    public MyChall getMyCurrChallenge(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        List<CurrChall> currChalls = new ArrayList<>();
+        List<MadeChall> madeChalls = new ArrayList<>();
+
+        List<Challenge> madeChall = challengeRepository.findAllByOwnerAndFinishedIsFalse(user);
+
+        for (Challenge challenge : madeChall) {
+            madeChalls.add(MadeChall.builder()
+                    .id(challenge.getId())
+                    .imageUrl(challenge.getImageUrl())
+                    .missionName(challenge.getMission().getTitle())
+                    .build());
+        }
+
+        List<UserChallenge> currChall = userChallengeRepository.findAllByUser(user);
+        for (UserChallenge challenge : currChall) {
+            if (challenge.getChallenge().isFinished() == false) {
+                currChalls.add(CurrChall.builder()
+                        .id(challenge.getId())
+                        .imageUrl(challenge.getChallenge().getImageUrl())
+                        .missionName(challenge.getChallenge().getMission().getTitle())
+                        .build());
+            }
+        }
+        return MyChall.builder().madeChalls(madeChalls).currChalls(currChalls).build();
+    }
+
+    public MyChall getMyEndChallenge(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        List<CurrChall> currChalls = new ArrayList<>();
+        List<MadeChall> madeChalls = new ArrayList<>();
+
+        List<Challenge> madeChall = challengeRepository.findAllByOwnerAndFinishedIsTrue(user);
+
+        for (Challenge challenge : madeChall) {
+            madeChalls.add(MadeChall.builder()
+                    .id(challenge.getId())
+                    .imageUrl(challenge.getImageUrl())
+                    .missionName(challenge.getMission().getTitle())
+                    .build());
+        }
+
+        List<UserChallenge> currChall = userChallengeRepository.findAllByUser(user);
+        for (UserChallenge challenge : currChall) {
+            if (challenge.getChallenge().isFinished() == true) {
+                currChalls.add(CurrChall.builder()
+                        .id(challenge.getId())
+                        .imageUrl(challenge.getChallenge().getImageUrl())
+                        .missionName(challenge.getChallenge().getMission().getTitle())
+                        .build());
+            }
+        }
+        return MyChall.builder().madeChalls(madeChalls).currChalls(currChalls).build();
+
     }
 
     public void enterRoom(ChallengeReq challengeReq) {
@@ -78,7 +205,6 @@ public class ChallengeService {
         userChallengeRepository.save(
                 UserChallenge.builder().challenge(challenge).user(user)
                         .build());
-
     }
 
     // 지목할 사람 리스트
@@ -91,4 +217,6 @@ public class ChallengeService {
                 .map(c -> new GetNominationRes(c.getUser().getId(), c.getUser().getNickname()))
                 .collect(Collectors.toList());
     }
+
+
 }

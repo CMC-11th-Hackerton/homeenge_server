@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
-
 @Builder
 @Getter
 @AllArgsConstructor
@@ -15,7 +13,7 @@ import java.time.LocalDate;
 public class RoomReq {
 
     @ApiModelProperty(value = "리더 인덱스", example = "1")
-    private Long id;
+    private Long leaderId;
 
     @ApiModelProperty(value = "단계", example = "1")
     private Long step;
@@ -26,11 +24,11 @@ public class RoomReq {
     @ApiModelProperty(value = "미션 인덱스", example = "1")
     private Long missionId;
 
-    @ApiModelProperty(value = "내용", example = "챌린지 하실 분")
-    private String content;
-
     @ApiModelProperty(value = "인원 수", example = "4")
     private Long counts;
+
+    @ApiModelProperty(value = "방장의 말", example = "4")
+    private String content;
 
     @ApiModelProperty(value = "모집 마감 시간(시간분초)", example = "180808")
     private String endTime;

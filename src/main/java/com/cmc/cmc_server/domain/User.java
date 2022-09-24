@@ -25,6 +25,9 @@ public class User extends BaseTimeEntity {
     @ApiModelProperty(value = "사용자 idx", example = "1")
     private Long id;
 
+    @ApiModelProperty(value = "사용자 사진", example = "image.com")
+    private String imageUrl;
+
     @ApiModelProperty(value = "사용자 이메일", example = "kmw106933@naver.com")
     @Column(nullable = false, unique = true, length = 30)
     private String email;
@@ -41,9 +44,8 @@ public class User extends BaseTimeEntity {
     @Builder.Default
     private Integer points = 0;
 
-    @ApiModelProperty(value = "사용자 프로필 사진", example = "img.jpg")
-    private String imageUrl;
-
-
+    public void setImageUrl(String image) {
+        this.imageUrl = image;
+    }
 
 }

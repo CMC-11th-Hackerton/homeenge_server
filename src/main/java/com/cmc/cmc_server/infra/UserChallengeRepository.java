@@ -1,6 +1,7 @@
 package com.cmc.cmc_server.infra;
 
 import com.cmc.cmc_server.domain.Challenge;
+import com.cmc.cmc_server.domain.User;
 import com.cmc.cmc_server.domain.UserChallenge;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,10 @@ public interface UserChallengeRepository extends JpaRepository<UserChallenge, Lo
 
     @Query("select uc from UserChallenge uc where uc.challenge = :challenge and uc.nomination = false")
     List<UserChallenge> findByChallenge(Challenge challenge);
+
+    List<UserChallenge> findAllByChallenge(Challenge challenge);
+
+    List<UserChallenge> findAllByUser(User user);
+
+
 }
