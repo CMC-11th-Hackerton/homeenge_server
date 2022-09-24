@@ -20,7 +20,7 @@ public class UserController {
 
     @PostMapping
     @ApiOperation(value = "사용자 등록", notes = "사용자의 정보를 받아 등록합니다.")
-    public User create(@RequestBody User user) {
+    public User user(@RequestBody User user) {
         return userService.create(user);
     }
 }
