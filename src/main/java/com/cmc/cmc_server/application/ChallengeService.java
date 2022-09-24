@@ -1,11 +1,9 @@
 package com.cmc.cmc_server.application;
 
-import com.cmc.cmc_server.domain.Challenge;
-import com.cmc.cmc_server.domain.Mission;
-import com.cmc.cmc_server.domain.User;
-import com.cmc.cmc_server.domain.UserChallenge;
+import com.cmc.cmc_server.domain.*;
 import com.cmc.cmc_server.dto.Challenge.ChallengeReq;
 import com.cmc.cmc_server.dto.Challenge.GetNominationRes;
+import com.cmc.cmc_server.dto.Challenge.NominateReq;
 import com.cmc.cmc_server.dto.Challenge.RoomReq;
 import com.cmc.cmc_server.errors.CustomException;
 import com.cmc.cmc_server.errors.ErrorCode;
@@ -91,4 +89,11 @@ public class ChallengeService {
                 .map(c -> new GetNominationRes(c.getUser().getId(), c.getUser().getNickname()))
                 .collect(Collectors.toList());
     }
+
+    // 지목하기
+    public void nominationUser(NominateReq nominateReq) {
+        userChallengeRepository.modifynom(nominateReq.getChallengeId(), nominateReq.getUserId());
+
+    }
+
 }
