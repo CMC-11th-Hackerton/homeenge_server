@@ -3,6 +3,7 @@ package com.cmc.cmc_server.controllers;
 import com.cmc.cmc_server.application.ImageService;
 import com.cmc.cmc_server.application.StoryService;
 import com.cmc.cmc_server.dto.Image.ImageReq;
+import com.cmc.cmc_server.dto.Story.GetStoryReq;
 import com.cmc.cmc_server.dto.Story.ReportStoryReq;
 import com.cmc.cmc_server.dto.Story.createStoryReq;
 import io.swagger.annotations.Api;
@@ -41,6 +42,22 @@ public class StoryController {
     public ResponseEntity<?> reportStory(@RequestBody ReportStoryReq reportStoryReq) {
         storyService.reportStory(reportStoryReq);
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 유저 스토리 조회 API*
+     * @param getStoryReq
+     * @return getStoryRes
+     */
+    @GetMapping("")
+    @ApiOperation(value = "스토리 조회", notes = "스토리를 조회한다.")
+    public ResponseEntity<?> getStory(@RequestBody GetStoryReq getStoryReq) {
+        try {
+            return ResponseEntity.ok().body(storyService.getStory(getStoryReq));
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }
