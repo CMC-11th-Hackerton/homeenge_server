@@ -1,10 +1,13 @@
 package com.cmc.cmc_server.dto.User;
 
+import com.cmc.cmc_server.dto.Challenge.ChallengeRes;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
 
 @Builder
 @Getter
@@ -22,12 +25,7 @@ public class UserInfoRes {
     @ApiModelProperty(value = "사용자 포인트", example = "10")
     private int points;
 
-    // 챌린지 정보
-    @ApiModelProperty(value = "챌린지 방 id", example = "1")
-    private Long challengeId; // 챌린지 방 id
-
-    @ApiModelProperty(value = "챌린지 미션 내용", example = "세수하기")
-    private String title; // 미션
-
+    // 참여 중인 챌린지 리스트
+    private List<ChallengeRes> challengeList;
 
 }
