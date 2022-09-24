@@ -5,6 +5,7 @@ import com.cmc.cmc_server.domain.Challenge;
 import com.cmc.cmc_server.domain.UserChallenge;
 import com.cmc.cmc_server.dto.Challenge.ChallengeReq;
 import com.cmc.cmc_server.dto.Challenge.GetNominationRes;
+import com.cmc.cmc_server.dto.Challenge.NominateReq;
 import com.cmc.cmc_server.dto.Challenge.RoomReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -71,4 +72,11 @@ public class ChallengeController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @ApiOperation(value = "챌린지 지목", notes = "챌린지 지목을 받은 유저의 nomination값을 true로 바꿉니다.")
+    @PostMapping("/nominate")
+    public void nominationUser(@RequestBody NominateReq nominateReq) {
+            challengeService.nominationUser(nominateReq);
+    }
+
 }
