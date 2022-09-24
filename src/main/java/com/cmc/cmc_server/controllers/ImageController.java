@@ -19,8 +19,9 @@ public class ImageController {
 
     @ApiOperation(value = "이미지 생성", notes = "Form Data 값을 받아와서 이미지를 생성하는 API",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PostMapping
+    @PostMapping(consumes = {"multipart/form-data"})
     public ImageRes createPost(@ModelAttribute ImageReq imageReq){
+
         return imageService.createPost(imageReq);
     }
 

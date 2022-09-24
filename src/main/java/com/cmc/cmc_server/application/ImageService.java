@@ -8,7 +8,6 @@ import com.cmc.cmc_server.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,11 +18,9 @@ import java.util.stream.Collectors;
 public class ImageService {
 
     private final S3Uploader s3Uploader;
-
     private final PostImageRepository postImageRepository;
 
     public ImageRes createPost(ImageReq imageReq) {
-
         List<String> postImages = uploadPostImages(imageReq);
         return ImageRes.builder().imageUrl(postImages).build();
     }
@@ -43,6 +40,7 @@ public class ImageService {
      * PostImage 생성 메서드
      */
     private PostImage createPostImage(String url) {
+        System.out.println("url = " + url);
         return postImageRepository.save(PostImage.builder()
                 .imageUrl(url)
                 .build());

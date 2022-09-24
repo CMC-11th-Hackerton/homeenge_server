@@ -18,7 +18,10 @@ import java.util.List;
 @AllArgsConstructor
 public class ImageReq {
 
-    @ApiModelProperty(value = "이미지 파일", required = false)
+    @ApiModelProperty(value = "게시글 제목", example = "화이팅!", required = true)
+    private String title;
+
+    @ApiModelProperty(value = "이미지 파일", example = "image.com")
     private List<MultipartFile> imageFiles = new ArrayList<>();
 
 }

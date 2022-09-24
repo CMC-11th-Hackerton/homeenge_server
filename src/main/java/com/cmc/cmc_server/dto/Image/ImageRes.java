@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +16,7 @@ import java.util.List;
 public class ImageRes {
 
     @ApiModelProperty(value = "해당 게시글에 저장된 이미지 경로")
+    @Builder.Default
     private List<String> imageUrl = new ArrayList<>();
 
 }
