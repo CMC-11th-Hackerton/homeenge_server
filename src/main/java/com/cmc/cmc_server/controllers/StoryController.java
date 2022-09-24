@@ -25,8 +25,9 @@ public class StoryController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(consumes = {"multipart/form-data"})
-    public void createStory(@ModelAttribute createStoryReq createStoryReq) {
+    public ResponseEntity<Void> createStory(@ModelAttribute createStoryReq createStoryReq) {
         storyService.create(createStoryReq);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
