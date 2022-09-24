@@ -1,10 +1,15 @@
 package com.cmc.cmc_server.infra;
 
-import com.cmc.cmc_server.domain.Challenge;
 import com.cmc.cmc_server.domain.UserChallenge;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public interface UserChallengeRepository extends JpaRepository<UserChallenge, Long> {
 
-    UserChallenge findByUser_Id(Long userId);
+    // user_id 동일 + challenge의 updatedAt > 지금-24시간 일 때
+    @Query("select uc from UserChallenge uc where uc.user.id = :userId and uc.challenge.updateAt > :now")
+    List<UserChallenge> findChallenges(Long userId, LocalDateTime now);
 }
