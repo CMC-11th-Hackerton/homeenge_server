@@ -2,10 +2,7 @@ package com.cmc.cmc_server.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -17,6 +14,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 @ApiModel("스토리 정보")
@@ -35,6 +33,9 @@ public class Story extends BaseTimeEntity {
 
     @ApiModelProperty(value = "스토리 이미지 url", example = "image.com")
     private String imageUrl;
+
+    @ApiModelProperty(value = "스토리 신고 수", example = "3")
+    private int report;
 
     @Builder
     public Story(Long userId, Challenge challenge, String imageUrl) {

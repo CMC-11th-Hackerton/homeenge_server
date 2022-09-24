@@ -68,9 +68,20 @@ public class StoryService {
 
     // 스토리 신고
     public void reportStory(ReportStoryReq reportStoryReq) {
-        long userId = reportStoryReq.getUserId();
         long storyId = reportStoryReq.getStoryId();
-        reportRepository.save(Report.builder().userId(userId).storyId(storyId).build());
+        Story story = storyRepository.findById(storyId).orElseThrow(() -> new CustomException(ErrorCode.STORY_NOT_FOUND));
+
+        story.setReport(story.getReport()+1);
+        storyRepository.save(story);
+
+        this.checkStory(story);
+    }
+
+    // 스토리 신고 과다 체크
+    private void checkStory(Story story) {
+        if(story.getReport() >= 3) {
+            storyRepository.delete(story);
+        }
     }
 
     // 스토리 조회
