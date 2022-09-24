@@ -23,6 +23,9 @@ public class ChallRes {
     @ApiModelProperty(value = "챌린지 제목", example = "8시에 일어나기")
     private String challengeName;
 
+    @ApiModelProperty(value = "방장님의 한 마디", example = "8시에 일어나기")
+    private String content;
+
     @ApiModelProperty(value = "총 인원 수", example = "15")
     private Long counts;
 
