@@ -41,4 +41,9 @@ public class User extends BaseTimeEntity {
     @Builder.Default
     private Integer points = 0;
 
+    @ApiModelProperty(value = "사용자 프로필 사진", example = "img.jpg")
+    private String imageUrl;
+
+
+
 }

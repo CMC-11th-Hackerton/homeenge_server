@@ -4,6 +4,8 @@ import com.cmc.cmc_server.application.ChallengeService;
 import com.cmc.cmc_server.domain.Challenge;
 import com.cmc.cmc_server.domain.UserChallenge;
 import com.cmc.cmc_server.dto.Challenge.ChallengeReq;
+import com.cmc.cmc_server.dto.Challenge.GetNominationRes;
+import com.cmc.cmc_server.dto.Challenge.NominateReq;
 import com.cmc.cmc_server.dto.Challenge.RoomReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,6 +54,29 @@ public class ChallengeController {
     public ResponseEntity<Void> enterRoom(@RequestBody ChallengeReq challengeReq) {
         challengeService.enterRoom(challengeReq);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * 챌린지 지목 리스트 API*
+     * @param challengeId
+     * @return List<GetNominationRes></GetNominationRes>
+     */
+    @ApiOperation(value = "챌린지 지목 리스트", notes = "챌린지 지목을 받지 않은 유저 리스트를 반환합니다.")
+    @GetMapping("/nominate/{challengeId}")
+    public ResponseEntity<?> getNomination(@PathVariable Long challengeId) {
+        try {
+            List<GetNominationRes> nominationList = challengeService.getNomination(challengeId);
+            return ResponseEntity.ok().body(nominationList);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @ApiOperation(value = "챌린지 지목", notes = "챌린지 지목을 받은 유저의 nomination값을 true로 바꿉니다.")
+    @PostMapping("/nominate")
+    public void nominationUser(@RequestBody NominateReq nominateReq) {
+            challengeService.nominationUser(nominateReq);
     }
 
 }
