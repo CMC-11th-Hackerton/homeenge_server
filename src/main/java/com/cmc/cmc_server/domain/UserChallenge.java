@@ -34,6 +34,8 @@ public class UserChallenge {
     @ManyToOne(fetch = FetchType.EAGER)
     private Story story;
 
+    private String content;
+
     //성공여부
     @Builder.Default
     private boolean IsSuccess = false;
