@@ -2,6 +2,7 @@ package com.cmc.cmc_server.controllers;
 
 import com.cmc.cmc_server.application.ImageService;
 import com.cmc.cmc_server.application.StoryService;
+import com.cmc.cmc_server.dto.Story.ReportStoryReq;
 import com.cmc.cmc_server.dto.Story.createStoryReq;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,17 @@ public class StoryController {
     public ResponseEntity<Void> createStory(@ModelAttribute createStoryReq createStoryReq) {
         storyService.create(createStoryReq);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    /**
+     * 스토리 신고 API*
+     * @param reportStoryReq(userId, storyId)
+     */
+    @PostMapping("/report")
+    @ApiOperation(value = "스토리 신고", notes = "스토리를 신고한다.")
+    public ResponseEntity<?> reportStory(@RequestBody ReportStoryReq reportStoryReq) {
+        storyService.reportStory(reportStoryReq);
+        return ResponseEntity.ok().build();
     }
 
 }
