@@ -20,4 +20,7 @@ public class CurrChall {
     @ApiModelProperty(value = "미션 내용", example = "8시에 일어나서 이불개기")
     private String missionName;
 
+    @ApiModelProperty(value = "진행 여부", example = "true")
+    private boolean finished;
+
 }

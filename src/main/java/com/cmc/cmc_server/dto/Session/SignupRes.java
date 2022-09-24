@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignupRes {
+    private String userId;
     private String email;
     private String nickname;
     private String proImg;

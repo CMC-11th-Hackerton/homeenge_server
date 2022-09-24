@@ -122,6 +122,7 @@ public class ChallengeService {
                     .id(challenge.getId())
                     .imageUrl(challenge.getMission().getImageUrl())
                     .missionName(challenge.getMission().getTitle())
+                    .finished(challenge.isFinished())
                     .build());
         }
         List<UserChallenge> currChall = userChallengeRepository.findAllByUser(user);
@@ -130,6 +131,7 @@ public class ChallengeService {
                     .id(challenge.getId())
                     .imageUrl(challenge.getChallenge().getMission().getImageUrl())
                     .missionName(challenge.getChallenge().getMission().getTitle())
+                    .finished(challenge.getChallenge().isFinished())
                     .build());
         }
         return MyChall.builder().madeChalls(madeChalls).currChalls(currChalls).build();
@@ -151,6 +153,7 @@ public class ChallengeService {
                     .id(challenge.getId())
                     .imageUrl(challenge.getMission().getImageUrl())
                     .missionName(challenge.getMission().getTitle())
+                    .finished(challenge.isFinished())
                     .build());
         }
 
@@ -161,6 +164,7 @@ public class ChallengeService {
                         .id(challenge.getId())
                         .imageUrl(challenge.getChallenge().getMission().getImageUrl())
                         .missionName(challenge.getChallenge().getMission().getTitle())
+                        .finished(challenge.getChallenge().isFinished())
                         .build());
             }
         }
@@ -181,6 +185,7 @@ public class ChallengeService {
                     .id(challenge.getId())
                     .imageUrl(challenge.getMission().getImageUrl())
                     .missionName(challenge.getMission().getTitle())
+                    .finished(challenge.isFinished())
                     .build());
         }
 
@@ -191,6 +196,7 @@ public class ChallengeService {
                         .id(challenge.getId())
                         .imageUrl(challenge.getChallenge().getMission().getImageUrl())
                         .missionName(challenge.getChallenge().getMission().getTitle())
+                        .finished(challenge.getChallenge().isFinished())
                         .build());
             }
         }
