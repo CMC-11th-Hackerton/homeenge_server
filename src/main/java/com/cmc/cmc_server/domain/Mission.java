@@ -30,7 +30,4 @@ public class Mission {
     @ApiModelProperty(value = "미션 이름", example = "양치하기")
     private String title;
 
-    @ApiModelProperty(value = "미션 정원", example = "5")
-    private Integer personnel;
-
 }
