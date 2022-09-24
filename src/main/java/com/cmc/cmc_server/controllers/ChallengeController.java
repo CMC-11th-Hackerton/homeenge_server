@@ -47,11 +47,11 @@ public class ChallengeController {
         return challengeService.getRoom(id);
     }
 
-    @ApiOperation(value = "특정 챌린지 방 참여하기", notes = "챌린지 방에 참여하는 API, 정상적으로 참여한 경우 true를 반환합니다.")
+    @ApiOperation(value = "챌린지 방 신청하기", notes = "챌린지 방에 참여하는 API, 정상적으로 참여한 경우 true를 반환합니다.")
     @PostMapping("/enter")
     public ResponseEntity<Void> enterRoom(@RequestBody ChallengeReq challengeReq) {
         challengeService.enterRoom(challengeReq);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

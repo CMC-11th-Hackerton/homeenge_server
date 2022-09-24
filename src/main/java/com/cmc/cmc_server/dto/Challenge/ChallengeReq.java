@@ -16,4 +16,6 @@ public class ChallengeReq {
 
     @ApiModelProperty(value = "방 인덱스", example = "1")
     private Long roomId;
+
+
 }
