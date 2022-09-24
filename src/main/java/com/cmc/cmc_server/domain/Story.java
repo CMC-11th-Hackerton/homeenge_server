@@ -29,4 +29,5 @@ public class Story extends BaseTimeEntity {
 
     private String imageUrl;
 
+
 }

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/session")
 @RequiredArgsConstructor
+@RequestMapping("/session")
 @Api(tags = "세션 API")
 public class SessionController
 {
@@ -27,5 +27,6 @@ public class SessionController
     public SignupRes signup(@RequestBody @Valid SignupReq signupReq) {
         return sessionService.signup(signupReq);
     }
+
 
 }

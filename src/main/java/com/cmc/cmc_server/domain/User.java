@@ -38,5 +38,4 @@ public class User extends BaseTimeEntity {
     private String nickname;
 
 
-
 }

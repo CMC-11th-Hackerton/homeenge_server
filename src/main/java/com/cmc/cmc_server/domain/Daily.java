@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import java.time.LocalDateTime;
-
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
