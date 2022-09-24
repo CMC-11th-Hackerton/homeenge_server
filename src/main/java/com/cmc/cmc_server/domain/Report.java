@@ -15,11 +15,10 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 @ApiModel("신고 정보")
-public class report {
+public class Report {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @ApiModelProperty(value = "신고 idx", example = "1")
@@ -30,4 +29,10 @@ public class report {
 
     @ApiModelProperty(value = "스토리 idx", example = "1")
     private Long storyId;
+
+    @Builder
+    public Report(Long userId, Long storyId) {
+        this.userId = userId;
+        this.storyId = storyId;
+    }
 }
