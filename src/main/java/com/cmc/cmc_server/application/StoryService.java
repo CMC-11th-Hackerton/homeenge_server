@@ -1,26 +1,23 @@
 package com.cmc.cmc_server.application;
 
 
-import com.cmc.cmc_server.domain.Challenge;
-import com.cmc.cmc_server.domain.Report;
-import com.cmc.cmc_server.domain.Story;
-import com.cmc.cmc_server.domain.User;
+import com.cmc.cmc_server.domain.*;
 import com.cmc.cmc_server.dto.Image.ImageReq;
 import com.cmc.cmc_server.dto.Image.ImageRes;
-import com.cmc.cmc_server.dto.Story.GetStoryReq;
-import com.cmc.cmc_server.dto.Story.GetStoryRes;
-import com.cmc.cmc_server.dto.Story.ReportStoryReq;
+import com.cmc.cmc_server.dto.Story.*;
 import com.cmc.cmc_server.errors.CustomException;
 import com.cmc.cmc_server.errors.ErrorCode;
-import com.cmc.cmc_server.infra.ChallengeRepository;
-import com.cmc.cmc_server.infra.ReportRepository;
-import com.cmc.cmc_server.infra.StoryRepository;
-import com.cmc.cmc_server.infra.UserRepository;
+import com.cmc.cmc_server.infra.*;
 import com.cmc.cmc_server.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +31,7 @@ public class StoryService {
     private final S3Uploader s3Uploader;
     private final ReportRepository reportRepository;
     private final UserRepository userRepository;
+    private final UserChallengeRepository userChallengeRepository;
     private final ChallengeRepository challengeRepository;
 
     public ImageRes createPost(ImageReq imageReq) {
@@ -95,5 +93,34 @@ public class StoryService {
         }
 
         return new GetStoryRes(user.getNickname(), urls);
+    }
+
+    public ChallengeDetailRes getChallengeDetail(Long challengeId){
+        Challenge challenge = challengeRepository.findById(challengeId).orElseThrow(() -> new CustomException(ErrorCode.CHALLENGE_NOT_FOUND));
+        Long time = ChronoUnit.SECONDS.between(LocalDateTime.now(), challenge.getFinishTime());
+        Long hours = time / (60 * 60);
+        Long minutes = (time / 60) % 60;
+        Long seconds = time % 60;
+
+        String lastTime = hours.toString() + ":" + minutes.toString() + ":" + seconds.toString();
+
+        List<UserChallenge> userChallengeList = userChallengeRepository.findAllByChallenge(challenge);
+        List<UserStoryRes> userStoryResList = new ArrayList<>();
+        for(UserChallenge temp: userChallengeList){
+            UserStoryRes userStoryRes = new UserStoryRes(
+                    temp.getUser().getId(),
+                    temp.isIsSuccess(),
+                    temp.getUser().getImageUrl()
+            );
+            userStoryResList.add(userStoryRes);
+        }
+
+        return ChallengeDetailRes.builder()
+                .title(challenge.getTitle())
+                .counts(challenge.getCounts())
+                .likes(challenge.getLikes())
+                .lastTime(lastTime)
+                .userStoryResList(userStoryResList)
+                .build();
     }
 }
