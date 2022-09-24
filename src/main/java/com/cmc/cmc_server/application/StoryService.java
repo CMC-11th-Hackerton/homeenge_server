@@ -1,6 +1,7 @@
 package com.cmc.cmc_server.application;
 
 
+import com.cmc.cmc_server.domain.Challenge;
 import com.cmc.cmc_server.domain.Report;
 import com.cmc.cmc_server.domain.Story;
 import com.cmc.cmc_server.domain.User;
@@ -11,6 +12,7 @@ import com.cmc.cmc_server.dto.Story.GetStoryRes;
 import com.cmc.cmc_server.dto.Story.ReportStoryReq;
 import com.cmc.cmc_server.errors.CustomException;
 import com.cmc.cmc_server.errors.ErrorCode;
+import com.cmc.cmc_server.infra.ChallengeRepository;
 import com.cmc.cmc_server.infra.ReportRepository;
 import com.cmc.cmc_server.infra.StoryRepository;
 import com.cmc.cmc_server.infra.UserRepository;
@@ -32,6 +34,7 @@ public class StoryService {
     private final S3Uploader s3Uploader;
     private final ReportRepository reportRepository;
     private final UserRepository userRepository;
+    private final ChallengeRepository challengeRepository;
 
     public ImageRes createPost(ImageReq imageReq) {
         List<String> postImages = uploadPostImages(imageReq);
@@ -42,9 +45,11 @@ public class StoryService {
      * 이미지 파일 S3 저장 + PostImage 생성
      */
     private List<String> uploadPostImages(ImageReq imageReq) {
+        Challenge challenge = challengeRepository.findById(imageReq.getChallengeId()).orElseThrow(() -> new CustomException(ErrorCode.CHALLENGE_NOT_FOUND));
+
         return imageReq.getImageFiles().stream()
                 .map(image -> s3Uploader.upload(image, "post"))
-                .map(url -> createStory(url, imageReq.getId()))
+                .map(url -> createStory(url, imageReq.getId(), challenge))
                 .map(postImage -> postImage.getImageUrl())
                 .collect(Collectors.toList());
     }
@@ -52,10 +57,11 @@ public class StoryService {
     /**
      * Story 생성 메서드
      */
-    private Story createStory(String url, long id) {
+    private Story createStory(String url, long id, Challenge challenge) {
         System.out.println("url = " + url);
         return storyRepository.save(Story.builder()
                 .userId(id)
+                .challenge(challenge)
                 .imageUrl(url)
                 .build());
     }

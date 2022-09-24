@@ -37,8 +37,9 @@ public class Story extends BaseTimeEntity {
     private String imageUrl;
 
     @Builder
-    public Story(Long userId, String imageUrl) {
+    public Story(Long userId, Challenge challenge, String imageUrl) {
         this.userId = userId;
+        this.challenge = challenge;
         this.imageUrl = imageUrl;
     }
 }
