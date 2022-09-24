@@ -1,5 +1,6 @@
 package com.cmc.cmc_server.domain;
 
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -17,24 +18,16 @@ import static lombok.AccessLevel.PROTECTED;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-@ApiModel("초대된 사용자 정보")
-public class UserChallenge {
-
+@ApiModel("신고 정보")
+public class report {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @ApiModelProperty(value = "idx", example = "1")
-    private Long id;
+    @ApiModelProperty(value = "신고 idx", example = "1")
+    private Long reportId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Challenge challenge;
+    @ApiModelProperty(value = "사용자 idx", example = "1")
+    private Long userId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Story story;
-
-    @Builder.Default
-    private boolean IsSuccess = false;
-
+    @ApiModelProperty(value = "스토리 idx", example = "1")
+    private Long storyId;
 }

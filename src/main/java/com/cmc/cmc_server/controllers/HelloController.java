@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/hello")
 public class HelloController {
 
+
     @ApiOperation(value= "테스트 확인", notes= "테스트 예제를 출력하는 api")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
