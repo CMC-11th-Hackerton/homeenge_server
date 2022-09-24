@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.time.LocalDateTime;
+
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -35,9 +37,26 @@ public class Challenge extends BaseTimeEntity{
 
     private String content;
 
-    private Long counts;
+    // 총 인원수
+    @Builder.Default
+    private Long counts = 0L;
+
+    // 현재 참여 수
+    @Builder.Default
+    private Long currCounts = 0L;
 
     @Builder.Default
     private boolean finished = false;
 
+    @Builder.Default
+    private Integer step = 1;
+
+    private LocalDateTime finishTime;
+
+    @Builder.Default
+    private Integer likes = 0;
+
+    public void addCurrCounts() {
+        currCounts += 1;
+    }
 }

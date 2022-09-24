@@ -1,6 +1,7 @@
 package com.cmc.cmc_server.application;
 
 import com.cmc.cmc_server.domain.Challenge;
+import com.cmc.cmc_server.domain.Mission;
 import com.cmc.cmc_server.domain.User;
 import com.cmc.cmc_server.domain.UserChallenge;
 import com.cmc.cmc_server.dto.Challenge.ChallengeReq;
@@ -8,13 +9,16 @@ import com.cmc.cmc_server.dto.Challenge.RoomReq;
 import com.cmc.cmc_server.errors.CustomException;
 import com.cmc.cmc_server.errors.ErrorCode;
 import com.cmc.cmc_server.infra.ChallengeRepository;
+import com.cmc.cmc_server.infra.MissionRepository;
 import com.cmc.cmc_server.infra.UserChallengeRepository;
 import com.cmc.cmc_server.infra.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -22,6 +26,7 @@ import java.util.List;
 @Transactional
 public class ChallengeService {
 
+    private final MissionRepository missionRepository;
     private final ChallengeRepository challengeRepository;
     private final UserRepository userRepository;
     private final UserChallengeRepository userChallengeRepository;
@@ -34,11 +39,19 @@ public class ChallengeService {
         User user = userRepository.findById(roomReq.getId())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
+        Mission mission = missionRepository.getById(roomReq.getMissionId());
+
+        String input = "20220925"+roomReq.getEndTime();
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        LocalDateTime ldt = LocalDateTime.parse(input.substring(0, 14), f);
+
         Challenge challenge = Challenge.builder()
                 .owner(user)
                 .title(roomReq.getContent())
                 .content(roomReq.getContent())
                 .counts(roomReq.getCounts())
+                .mission(mission)
+                .finishTime(ldt)
                 .build();
 
         return challengeRepository.save(challenge);
@@ -55,19 +68,12 @@ public class ChallengeService {
 
     public void enterRoom(ChallengeReq challengeReq) {
         User user = userRepository.getById(challengeReq.getUserId());
-        List<Challenge> challenge = challengeRepository.findAllById(challengeReq.getRoomId());
-        List<UserChallenge> userChallenges = new ArrayList<>();
+        Challenge challenge = challengeRepository.getById(challengeReq.getRoomId());
+        challenge.addCurrCounts();
 
-        for (Challenge challenges : challenge) {
-            UserChallenge save = userChallengeRepository.save(
-                    UserChallenge.builder().user(user)
-                            .challenge(challenges)
-                            .build());
-
-            for (UserChallenge userChallenge : userChallenges) {
-                userChallenge = save;
-            }
-        }
+        userChallengeRepository.save(
+                UserChallenge.builder().challenge(challenge).user(user)
+                        .build());
 
     }
 
