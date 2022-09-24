@@ -5,6 +5,7 @@ import com.cmc.cmc_server.domain.Mission;
 import com.cmc.cmc_server.domain.User;
 import com.cmc.cmc_server.domain.UserChallenge;
 import com.cmc.cmc_server.dto.Challenge.ChallengeReq;
+import com.cmc.cmc_server.dto.Challenge.GetNominationRes;
 import com.cmc.cmc_server.dto.Challenge.RoomReq;
 import com.cmc.cmc_server.errors.CustomException;
 import com.cmc.cmc_server.errors.ErrorCode;
@@ -16,10 +17,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.cmc.cmc_server.errors.ErrorCode.CHALLENGE_NOT_FOUND;
+import static com.cmc.cmc_server.errors.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -77,4 +81,14 @@ public class ChallengeService {
 
     }
 
+    // 지목할 사람 리스트
+    public List<GetNominationRes> getNomination(Long challengeId) {
+        //challenge 통해서 nomination false인 사람 찾아서 반환하기
+        Challenge challenge = challengeRepository.findById(challengeId).orElseThrow(() -> new CustomException(CHALLENGE_NOT_FOUND));
+        List<UserChallenge> challengeList = userChallengeRepository.findByChallenge(challenge);
+
+        return challengeList.stream()
+                .map(c -> new GetNominationRes(c.getUser().getId(), c.getUser().getNickname()))
+                .collect(Collectors.toList());
+    }
 }
