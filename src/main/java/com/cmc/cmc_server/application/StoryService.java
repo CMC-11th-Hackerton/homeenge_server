@@ -34,22 +34,20 @@ public class StoryService {
     private final UserChallengeRepository userChallengeRepository;
     private final ChallengeRepository challengeRepository;
 
-    public ImageRes createPost(ImageReq imageReq) {
-        List<String> postImages = uploadPostImages(imageReq);
-        return ImageRes.builder().imageUrl(postImages).build();
+    public void createPost(ImageReq imageReq) {
+        String s = uploadPostImages(imageReq);
     }
 
     /**
      * 이미지 파일 S3 저장 + PostImage 생성
      */
-    private List<String> uploadPostImages(ImageReq imageReq) {
+    private String uploadPostImages(ImageReq imageReq) {
         Challenge challenge = challengeRepository.findById(imageReq.getChallengeId()).orElseThrow(() -> new CustomException(ErrorCode.CHALLENGE_NOT_FOUND));
 
-        return imageReq.getImageFiles().stream()
-                .map(image -> s3Uploader.upload(image, "post"))
-                .map(url -> createStory(url, imageReq.getId(), challenge))
-                .map(postImage -> postImage.getImageUrl())
-                .collect(Collectors.toList());
+        String url = s3Uploader.upload(imageReq.getImageFiles(), "post");
+        Story story = createStory(url, imageReq.getId(), challenge);
+        return story.getImageUrl();
+
     }
 
     /**

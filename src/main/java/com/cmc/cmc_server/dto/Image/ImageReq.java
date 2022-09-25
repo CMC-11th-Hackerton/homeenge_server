@@ -25,7 +25,7 @@ public class ImageReq {
     private Long challengeId;
 
     @ApiModelProperty(value = "이미지 파일", example = "image.com")
-    private List<MultipartFile> imageFiles = new ArrayList<>();
+    private MultipartFile imageFiles;
 
 
 }
