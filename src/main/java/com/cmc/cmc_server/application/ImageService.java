@@ -17,32 +17,32 @@ import java.util.stream.Collectors;
 @Transactional
 public class ImageService {
 
-    private final S3Uploader s3Uploader;
-    private final PostImageRepository postImageRepository;
-
-    public ImageRes createPost(ImageReq imageReq) {
-        List<String> postImages = uploadPostImages(imageReq);
-        return ImageRes.builder().imageUrl(postImages).build();
-    }
-
-    /**
-     * 이미지 파일 S3 저장 + PostImage 생성
-     */
-    private List<String> uploadPostImages(ImageReq imageReq) {
-        return imageReq.getImageFiles().stream()
-                .map(image -> s3Uploader.upload(image, "post"))
-                .map(url -> createPostImage(url))
-                .map(postImage -> postImage.getImageUrl())
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * PostImage 생성 메서드
-     */
-    private PostImage createPostImage(String url) {
-        System.out.println("url = " + url);
-        return postImageRepository.save(PostImage.builder()
-                .imageUrl(url)
-                .build());
-    }
+//    private final S3Uploader s3Uploader;
+//    private final PostImageRepository postImageRepository;
+//
+//    public ImageRes createPost(ImageReq imageReq) {
+//        List<String> postImages = uploadPostImages(imageReq);
+//        return ImageRes.builder().imageUrl(postImages).build();
+//    }
+//
+//    /**
+//     * 이미지 파일 S3 저장 + PostImage 생성
+//     */
+//    private List<String> uploadPostImages(ImageReq imageReq) {
+////        return imageReq.getImageFiles().stream()
+////                .map(image -> s3Uploader.upload(image, "post"))
+////                .map(url -> createPostImage(url))
+////                .map(postImage -> postImage.getImageUrl())
+////                .collect(Collectors.toList());
+//    }
+//
+//    /**
+//     * PostImage 생성 메서드
+//     */
+//    private PostImage createPostImage(String url) {
+//        System.out.println("url = " + url);
+//        return postImageRepository.save(PostImage.builder()
+//                .imageUrl(url)
+//                .build());
+//    }
 }
