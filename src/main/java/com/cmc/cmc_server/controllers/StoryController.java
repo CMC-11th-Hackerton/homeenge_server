@@ -46,7 +46,7 @@ public class StoryController {
      * @param getStoryReq
      * @return getStoryRes
      */
-    @PostMapping("")
+    @PostMapping("/search")
     @ApiOperation(value = "스토리 조회", notes = "스토리를 조회한다.")
     public ResponseEntity<?> getStory(@RequestBody GetStoryReq getStoryReq) {
         try {
