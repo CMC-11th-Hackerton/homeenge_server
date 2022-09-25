@@ -21,7 +21,6 @@ public class StoryController {
 
     private final StoryService storyService;
 
-
     @ApiOperation(value = "스토리 생성", notes = "사용자 스토리를 생성하는 api",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.OK)
@@ -47,7 +46,7 @@ public class StoryController {
      * @param getStoryReq
      * @return getStoryRes
      */
-    @GetMapping("")
+    @PostMapping("")
     @ApiOperation(value = "스토리 조회", notes = "스토리를 조회한다.")
     public ResponseEntity<?> getStory(@RequestBody GetStoryReq getStoryReq) {
         try {
